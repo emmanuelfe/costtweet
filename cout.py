@@ -22,13 +22,16 @@ from tqdm import tqdm
 tqdm.pandas(desc="progress-bar")
 
 
-eco = ['modique','économique','ténu','japonais', 'chinois','kebab', 'self','dix','pourri','quinze']
+eco = ['modique','économique','ténu','japonais', 'chinois','kebab', 'self','dix','10','pourri','quinze','15','avantageux']
 troquet = ['troquet','bistrot','cantine','self']
 negation = ['pas','ni','peu']
-cher = ['bon','cent', 'cinquante','luxe', 'gastronomique', 'classe','riche','michelin','etoile','standing','haut']
+cher = ['cher','bon','cent', 'cinquante','luxe','luxueux','fiche','moyens', 'gastronomique', 'classe','riche','michelin','etoile','étoiles',
+'standing','haut','100', 'cinquante', 'vingt','20','chicos','onéreux','onereux']
+monnaie = ['gamme', 'euro', 'prix', 'euros']
+
 
 def ingest():
-	dataset = pd.read_csv("RuleCout1.csv", delimiter=";", encoding='utf-8')
+	dataset = pd.read_csv("RuleCout2.csv", delimiter=";", encoding='utf-8')
 	print ( 'dataset loaded with shape',dataset.shape)
 	X = dataset['text']
 	Y = dataset['class']
@@ -48,6 +51,8 @@ def score(word):
 		return 4
 	elif word in cher:
 		return 5
+	elif word in monnaie:
+		return 6
 	else: 
 		return 1
 	
@@ -89,7 +94,7 @@ print(X)
 def baseline_model():
 	# create model
 	model = Sequential()
-	model.add(Dense(12, input_dim=6, activation='relu'))
+	model.add(Dense(12, input_dim=5, activation='relu'))
 	model.add(Dense(3, activation='softmax'))
 	# Compile model
 	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
