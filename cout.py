@@ -1,3 +1,7 @@
+# written by Emmanuel FERRET
+# thanks to 
+
+
 import numpy
 import pandas
 from keras.models import Sequential
@@ -24,7 +28,7 @@ negation = ['pas','ni','peu']
 cher = ['bon','cent', 'cinquante','luxe', 'gastronomique', 'classe','riche','michelin','etoile','standing','haut']
 
 def ingest():
-	dataset = pd.read_csv("RuleCout.csv", delimiter=";", encoding='utf-8')
+	dataset = pd.read_csv("RuleCout1.csv", delimiter=";", encoding='utf-8')
 	print ( 'dataset loaded with shape',dataset.shape)
 	X = dataset['text']
 	Y = dataset['class']
@@ -85,7 +89,7 @@ print(X)
 def baseline_model():
 	# create model
 	model = Sequential()
-	model.add(Dense(6, input_dim=12, activation='relu'))
+	model.add(Dense(12, input_dim=6, activation='relu'))
 	model.add(Dense(3, activation='softmax'))
 	# Compile model
 	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
