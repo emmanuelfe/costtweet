@@ -1,15 +1,7 @@
 ﻿text;class
-à prix modique ;éco
 aucun problème d'argent;cher
-avantageux ;éco
-bas de gamme ;éco
-bistrot pas cher ;éco
 bon;cher
-bon marché ;éco
-bon rapport qualité prix ;moyen
 cher ;cher
-éco;éco
-économique ;éco
 gastronomique ;cher
 haut de gamme ;cher
 j’ai les moyens ;cher
@@ -20,46 +12,58 @@ le meilleur des meilleurs;cher
 luxe ;cher
 luxueux ;cher
 ma bourse est pleine ;cher
-menu pas cher le midi ;éco
-modique ;éco
 moins de cent euros ;cher
-moins de dix euros ;éco
-moins de trente euros ;moyen
-moins de vingt ;éco
-moins de vingt euros ;éco
-moyen de gamme;moyen
-ni cher ni pas cher ;moyen
-pas cher;éco
-pas cher ;éco
-pas cher du tout éco;éco
-pas trop cher;éco
-pas un trois étoiles ;moyen
-peu importe le prix ;moyen
-peu onéreux;éco
 plus de vingt ;cher
 plutôt bien;cher
 plutôt cher;cher
 plutôt cher;cher
-plutôt pas cher;éco
 plutôt pas mal;cher
-plutôt un troquet ;éco
 qualité;cher
 standing ;cher
 super standing ;cher
-très bas de gamme;éco
-très bon marché ;éco
-très économique;éco
 très haut de gamme;cher
 très haut de gamme;cher
-très peu cher ;éco
 un bon repas ;cher
-un menu moins de quinze ;éco
 un plat à vingt ;cher
 un restau de qualité;cher
 un resto pour le gratin ;cher
-un self ;éco
 un très bon ;cher
 un truc chicos ;cher
 vraiment bon;cher
 vraiment luxueux;cher
+à prix modique ;éco
+avantageux ;éco
+bas de gamme ;éco
+bistrot pas cher ;éco
+bon marché ;éco
+éco;éco
+économique ;éco
+menu pas cher le midi ;éco
+modique ;éco
+moins de dix euros ;éco
+moins de vingt ;éco
+moins de vingt euros ;éco
+pas cher;éco
+pas cher ;éco
+pas cher du tout éco;éco
+pas trop cher;éco
+peu onéreux;éco
+plutôt pas cher;éco
+plutôt un troquet ;éco
+très bas de gamme;éco
+très bon marché ;éco
+très économique;éco
+très peu cher ;éco
+un menu moins de quinze ;éco
+un self ;éco
 vraiment pas cher;éco
+bon rapport qualité prix ;moyen
+moins de trente euros ;moyen
+moyen de gamme;moyen
+ni cher ni pas cher ;moyen
+pas un trois étoiles ;moyen
+peu importe le prix ;moyen
+entre 10 et 20;éco
+moins de quinze;éco
+jusqu'à cinquante;cher
+moins de trente euros ;moyen
