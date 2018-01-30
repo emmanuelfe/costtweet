@@ -1,6 +1,3 @@
-# written by Emmanuel FERRET
-# thanks to 
-
 import numpy as np
 import pandas as pd
 from keras.models import Sequential
@@ -13,6 +10,7 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
 
+# utile pour un meilleur affichage d'une matrice
 pd.set_option('display.width', 1000)
 
 from nltk.tokenize import TweetTokenizer
@@ -22,13 +20,15 @@ from tqdm import tqdm
 tqdm.pandas(desc="progress-bar")
 
 
-eco = ['modique','économique','ténu','japonais', 'chinois','kebab', 'self','dix','10','pourri','quinze','15','avantageux','marché','bas']
+eco = ['modique','économique','ténu','japonais', 'chinois','kebab', 'self','pourri','avantageux','marché','bas']
 troquet = ['troquet','bistrot','cantine','self']
 negation = ['pas','ni','peu']
-cher = ['cher','bon','cent', 'haut','cinquante','luxe','luxueux','fiche','fous','moyens', 'gastronomique', 'classe','riche','michelin','etoile','étoiles',
-'standing','haut','100','cent', 'cinquante', 'vingt','20','chicos','onéreux','onereux','super','ternte','30','meilleur','meilleurs','grattin','gratin']
+cher = ['cher','bon','haut','luxe','luxueux','fiche','fous','moyens', 'gastronomique', 'classe','riche','michelin','etoile','étoiles',
+'standing','haut','chicos','onéreux','onereux','super''meilleur','meilleurs','grattin','gratin']
 monnaie = ['gamme', 'euro', 'prix', 'euros','problème','pb','qualité']
 ambigu = ['milieu','moyen']
+nombreEco = ['0','5','10','15','zéro','cinq','dix','quinze']
+nombreCher= ['20','30','40','50','80','100','cent','vingt','trente','quarante','cinquante','quatre-vingt','cent']
 
 
 def ingest():
@@ -40,23 +40,25 @@ def ingest():
 	return dataset, X, Y
 
 dataset, X, Y = ingest()
-print("dataset résultat du read.csv",dataset)
-#print(Y)
-#dataset.head(5)
+print("dataset texte+class résultat du read.csv",dataset)
 
 def score(word):
 	if word in eco: 
-		return 2 
-	elif word in troquet: 
+		return 2
+	elif word in nombreEco:
 		return 3
-	elif word in negation:
+	elif word in troquet: 
 		return 4
-	elif word in cher:
+	elif word in negation:
 		return 5
 	elif word in monnaie:
 		return 6
 	elif word in ambigu:
 		return 7
+	elif word in nombreCher:
+		return 9
+	elif word in cher:
+		return 10
 	else: 
 		return 0
 	
@@ -64,21 +66,16 @@ def score(word):
 #print ( 'score troquet', score('troquet'))
 #print ( 'score inconnu', score('inconnu'))
 
-
 def tokenize(sentence):
 	tokens = tokenizer.tokenize(sentence)
 	return tokens
 	
-#print ("test de tokenize : ",tokenize("vraiement pas cher"))
-
-
 def postprocess(data):
 	data['tokens']= dataset['text'].progress_map(tokenize)
 	return data
 
 dataset = postprocess(dataset)
 print("dataset readcsv + tokens",dataset )
-#print ( 'data shape : ',data.shape)
 
 def token2code(tokens):
 	return list(map(score,tokens))
@@ -92,8 +89,6 @@ dataset = encode(dataset)
 print("dataset text+class+tokens+Xcodes",dataset)
 print ( 'data shape : ',dataset.shape)
 XEncoded = pad_sequences(dataset['Xcodes'])
-#print(XEncoded)
-
 
 # encode class values as integers
 encoder = LabelEncoder()
@@ -101,12 +96,10 @@ encoder.fit(Y)
 encoded_Y = encoder.transform(Y)
 # convert integers to dummy variables (i.e. one hot encoded)
 dummy_y = np_utils.to_categorical(encoded_Y)
-ycodes = pd.Series(list(dummy_y))
-dataset['Ycodes'] = ycodes
+dataset['Ycodes'] = pd.Series(list(dummy_y))
 
 print("dataset text class tokens Xcodes Ycodes",dataset)
 
-# define baseline model
 def baseline_model():
 	# create model
 	model = Sequential()
@@ -117,15 +110,13 @@ def baseline_model():
 	return model
 
 model = baseline_model()
-	
-estimator = KerasClassifier(build_fn=baseline_model, epochs=300, batch_size=5, verbose=0)
+estimator = KerasClassifier(build_fn=baseline_model, epochs=200, batch_size=5, verbose=0)
 	
 seed = 7
 np.random.seed(seed)
 kfold = KFold(n_splits=10, shuffle=True, random_state=seed)
 
-result = model.predict(XEncoded)
-dataset['predicted'] = pd.Series(list(result)) 
+dataset['predicted'] = list(model.predict(XEncoded)) 
 
 print(dataset)
 results = cross_val_score(estimator, XEncoded, dummy_y, cv=kfold)
